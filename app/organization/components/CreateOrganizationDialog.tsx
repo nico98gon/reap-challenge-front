@@ -78,14 +78,14 @@ export function CreateOrganizationDialog({ onOrganizationCreated }: CreateOrgani
       form.reset()
       setIsOpen(false)
       onOrganizationCreated()
-    } catch (error) {
-      console.error("Error creating organization:", error)
-      setServerError("Failed to create organization. Please try again.")
-    } finally {
       toast.success("Organization created", {
         description: `The organization ${data.name} has been created successfully`,
         icon: <ThumbsUpIcon className="text-green-500" size={20} />
       })
+    } catch (error) {
+      console.error("Error creating organization:", error)
+      setServerError("Failed to create organization. Please try again.")
+    } finally {
       setIsLoading(false)
     }
   }

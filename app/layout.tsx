@@ -23,13 +23,6 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen bg-background text-foreground`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Toaster
-            // toastOptions={{
-            //   classNames: {
-            //     icon: 'text-primaryColor',
-            //     title: 'text-primaryColor font-semibold',
-            //     description: 'text-gray-700',
-            //   },
-            // }}
             position="top-right"
             expand
           />
