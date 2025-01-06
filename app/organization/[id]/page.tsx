@@ -23,7 +23,7 @@ interface Organization {
   pcc_org_uuid: string | null
 }
 
-type tParams = Promise<{ id: string }>
+type tParams = { id: string }
 
 const organizationSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -35,8 +35,8 @@ const organizationSchema = z.object({
   })).min(1, 'At least one facility is required'),
 })
 
-export default async function OrganizationPage(props: { params: tParams }) {
-  const { id } = await props.params
+export default function OrganizationPage(props: { params: tParams }) {
+  const { id } = props.params
   const [organization, setOrganization] = useState<Organization | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
