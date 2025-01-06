@@ -52,7 +52,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    // @ts-expect-error
+    // @ts-expect-error Necesary to handle an incompatible type
     name: 'facilities',
   })
 
@@ -186,7 +186,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
             {fields.map((facility, index) => (
               <div key={facility.id} className="flex items-center space-x-4">
                 <Input
-                  // @ts-expect-error
+                  // @ts-expect-error Necesary to handle a dynamic index
                   {...form.register(`facilities.${index}.name`)}
                   placeholder="Facility Name"
                   className="mt-1 block w-full"
