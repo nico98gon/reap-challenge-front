@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, use } from 'react';
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -35,8 +35,9 @@ const organizationSchema = z.object({
   })).min(1, 'At least one facility is required'),
 })
 
-export default function OrganizationPage(props: { params: tParams }) {
-  const { id } = props.params
+export default function OrganizationPage(props: { params: Promise<tParams> }) {
+  const params = use(props.params);
+  const { id } = params
   const [organization, setOrganization] = useState<Organization | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)

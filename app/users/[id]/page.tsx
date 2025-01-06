@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,7 +15,8 @@ const userSchema = z.object({
 
 type UserFormData = z.infer<typeof userSchema>
 
-export default function UserPage({ params }: { params: { id: string } }) {
+export default function UserPage(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
