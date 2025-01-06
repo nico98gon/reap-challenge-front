@@ -23,6 +23,10 @@ interface Organization {
   pcc_org_uuid: string | null
 }
 
+interface OrganizationPageProps {
+  params: { id: string };
+}
+
 const organizationSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   pcc_org_id: z.string().min(1, 'PCC Org ID is required'),
@@ -33,7 +37,8 @@ const organizationSchema = z.object({
   })).min(1, 'At least one facility is required'),
 })
 
-export default function OrganizationPage({ params }: { params: { id: string } }) {
+export default function OrganizationPage({ params }: OrganizationPageProps) {
+  const { id } = params;
   const [organization, setOrganization] = useState<Organization | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -60,7 +65,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/organizations/${params.id}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/organizations/${id}`)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
@@ -77,7 +82,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
     } finally {
       setIsLoading(false)
     }
-  }, [params.id, form])
+  }, [id, form])
 
   useEffect(() => {
     fetchOrganization()
@@ -97,7 +102,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
     }
   
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/organizations/${params.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/organizations/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSubmit),
