@@ -52,7 +52,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    // @ts-ignore
+    // @ts-expect-error
     name: 'facilities',
   })
 
@@ -186,7 +186,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
             {fields.map((facility, index) => (
               <div key={facility.id} className="flex items-center space-x-4">
                 <Input
-                  // @ts-ignore
+                  // @ts-expect-error
                   {...form.register(`facilities.${index}.name`)}
                   placeholder="Facility Name"
                   className="mt-1 block w-full"
