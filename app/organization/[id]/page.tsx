@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -56,11 +56,7 @@ export default function OrganizationPage({ params }: { params: { id: string } })
     name: 'facilities',
   })
 
-  useEffect(() => {
-    fetchOrganization()
-  }, [])
-
-  const fetchOrganization = async () => {
+  const fetchOrganization = useCallback(async () => {
     setIsLoading(true)
     setError(null)
     try {
@@ -81,13 +77,17 @@ export default function OrganizationPage({ params }: { params: { id: string } })
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [params.id, form])
+
+  useEffect(() => {
+    fetchOrganization()
+  }, [fetchOrganization])
 
   const handleSubmit = async (data: z.infer<typeof organizationSchema>) => {
     setIsLoading(true)
     setError(null)
   
-    const { pcc_org_id, pcc_org_uuid, ...dataWithoutPcc } = data
+    const { pcc_org_id, pcc_org_uuid, ...dataWithoutPcc } = data // eslint-disable-line @typescript-eslint/no-unused-vars
 
     const dataToSubmit = {
       ...dataWithoutPcc,
