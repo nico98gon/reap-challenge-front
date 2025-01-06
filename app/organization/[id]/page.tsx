@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { Metadata } from 'next'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -24,7 +25,13 @@ interface Organization {
 }
 
 interface OrganizationPageProps {
-  params: { id: string };
+  params: { id: string }
+}
+
+export const generateMetadata = ({ params }: OrganizationPageProps): Metadata => {
+  return {
+    title: `Organization ${params.id}`,
+  }
 }
 
 const organizationSchema = z.object({
@@ -38,7 +45,7 @@ const organizationSchema = z.object({
 })
 
 export default function OrganizationPage({ params }: OrganizationPageProps) {
-  const { id } = params;
+  const { id } = params
   const [organization, setOrganization] = useState<Organization | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
